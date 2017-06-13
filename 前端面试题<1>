@@ -1,0 +1,138 @@
+1. javascript的typeof返回哪些数据类型？
+
+    number  string  function  object  undefined  boolean
+
+
+2. 什么是盒子模型？
+
+    在一个html文档中，每一个元素都被标示为一个矩形的盒子；矩形盒子由外边距(margin)，边框(border)，内边距(padding)，内容区域四部分组成。
+
+3. 清除浮动有哪些方式？你最常用的方式是哪一种？
+
+    清除浮动有两种方式：1.使用clear属性；2.使包含浮动的父元素形成BFC。clear 属性是让自身和前面的浮动元素不相邻可以根据前面元素的浮动属性来添加clear: left | right，较好的方式设置clear : both;
+    使父元素形成BFC的方式有：
+    •	float为 left | right
+    •	overflow为 hidden | auto | scroll
+    •	display为 table-cell | table-caption | inline-block
+    •	position为 absolute | fixed
+    通过设置父元素的以上属性使父元素能够包含浮动子元素，但在一定的程度上，也会改变父元素的样式。
+    我常用的方式为 ：父元素{
+                      *zoom:1;/*解决IE6,IE7不支持伪元素选择符*/
+    }
+    父元素:after{
+                       content:"";
+                       display: table;
+                       clear: both;
+    }
+
+
+5. display有哪些值？简单说说他们的作用。
+
+    1.display: none 
+    设置该属性的元素，不会被显示，也不会占据页面空间。
+    2.display:line
+       此元素会被显示为内联元素，元素前后没有换行符。设置了该属性之后设置高度、宽度都无效，同时text-align属性设置也无效，但是设置了line-height会让inline元素居中。
+    3.display：block
+       此元素将显示为块级元素，此元素前后会带有换行符。
+    4. display: list-item
+       此元素会作为列表显示。
+    5. display: inline-block
+       inline-block既具有block的宽高特性又具有inline的同行元素特性。
+    6. display: table
+       此元素会作为块级表格来显示（类似table），表格前后带有换行符。
+    7.display: flex
+       设为Flex布局以后，子元素的float、clear和vertical-align属性将失效。
+
+
+4. css什么属性可以设置控制移动端用户不可选中文字？
+
+    -webkit-user-select: none
+
+
+6. 下面代码会输出什么：
+    <script>
+      var test = (function(a) {
+              this.a = a;
+              return function(b) {
+              returnthis.a + b;
+      }
+      })(1); 
+      console.log(test(4)); 
+    </script>
+
+    输出：5
+
+7. 这些HTTP状态码500、404、400、304、302、301、200都表示什么意思？
+
+    500：服务器遇到一个错误，使其无法为请求提供服务。
+    404：未找到请求资源。
+    400：告诉客户端，它发送了一个错误的请求。
+    304：客户的缓存资源是最新的， 要客户端使用缓存。
+    301：请求的URL已移走。
+    200：服务器成功处理了请求。
+
+
+8. 请描述一下call()，apply()，bind()的用法和区别？
+
+    call()，apply()，bind()三个方法都是用于指定函数执行时的上下文，即（this的指向）。用法如下：foo.call(object,arg1,arg2,…)；
+                               foo.apply(object,[arg1,arg2,…]);
+                               var f = foo.bind(object,arg1,arg2)。
+    区别：1.call(),apply()返回函数的执行结果，而bind()返回一个指定了上下文、参数的新函数2.call(),bind(),参数直接传递，apply()的参数则要通过数组包装。3.bind()是ES5中新增的方法，在低版本的浏览器中可能出现错误。
+
+
+9. 请描述一下 cookies，sessionStorage 和 localStorage 的区别？
+
+    cookies, sessionStorage, localStorage都是用于客户端存储用户信息。cookie一般由服务器生成，可设置失效时间，如果在浏览器端生成cookie，默认是关闭浏览器后失效，一般大小为4k左右，每次浏览器与服务器端通信的http头部都会携带cookies；sessionStorage 和localStorage 仅在客户端保存小大一般为5M，不参与前端和后端的通信，sessionStorage 今在当前会话有效，关闭页面或浏览器后被清除。localStorage除非被清除，否则永久保存。
+
+10. new 操作符具体干了什么呢?
+    (1)创建一个空对象
+    (2)将构造函数中的this指向新创建的对象
+    (3)将新创建的对象的__proto__指向构造函数的prototype对象。
+    (4)执行构造函数内的代码。
+    (5)当构造函数有return object 时，直接返回object，否则返回新创建的对象。
+
+11. 请编写一个JavaScript函数 parseQueryString，它的用途是把URL参数解析为一个对象，如：
+    var url = “ http://www.taobao.com/index.php?key0=0&key1=1&key2=2.....”
+    var obj = parseQueryString(url);
+    alert(obj.key0)  // 输出0
+
+    'use strict'
+
+    var parseQueryString = function(url)
+    {
+    	var urlobj = {},
+    	    args = url.split('?')[1].split('&'),
+    	    len = args.length;
+
+    		for(let i =0 ; i < len ; i++)
+    	   {
+    		let valuekey = args[i].split('=');
+            urlobj[valuekey[0]] = valuekey[1];
+    	   }
+    	
+        return urlobj;
+    };
+
+
+12.浅析angular，react，vue.js的区别?
+    Angular 是一个完整的前端的框架，定义了构建前端应用的各个模块，而vuejs, react则可以看成是一个前端库，需要组合一些相应的前端工具库构建一个完整的前端框架。Vuejs定义了简洁的API，相对灵活更易上手，angular则需要学习比较复杂的‘angular’自带语法，react则以javascript 为中心，需要通过jsx编写dom，强制组件化，而vuejs，angular则是可选组件化。Angular 对大型前端应用更友好，react 对于构建复杂的用户界面的应用更友好，vue 结合了一些angular 和 react 的优点，在一些中小型的web应用有比较好的效率。 
+
+
+13. ES6中你使用过那些新特性？简单谈谈感受。
+
+    （1）指定参数的默认值
+    （2）模板表达式，在字符串中嵌入变量
+    （3）多行字符串
+    （4）拆包表达式
+    （5）对象表达式
+    （6）箭头函数
+    （7）promise对象
+    （8）块级作用域的let和const
+    （9） ES6中的类class
+    （10）ES6中的模块化 export，import
+    ES6新特性使javascript 更加简洁优雅。
+
+
+
+
+
